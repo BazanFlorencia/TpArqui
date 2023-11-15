@@ -15,9 +15,5 @@ public class NotFoundException extends RuntimeException {
         this.message = String.format( "La entidad %s con id %s no existe.", entity, id );
     }
     
-    public NotFoundException(String message ) {
-		this.message = message;
-		// TODO Auto-generated constructor stub
-	}
-
+    
 }

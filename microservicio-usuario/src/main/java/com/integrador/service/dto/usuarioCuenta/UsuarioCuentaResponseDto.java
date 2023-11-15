@@ -6,16 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
-@Data
-@RequiredArgsConstructor
+//@Data
 @NoArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class UsuarioCuentaResponseDto {
 	
-	private Long idUsuario;
-	private Long idCuenta;
-	
-	public UsuarioCuentaResponseDto(Long idUsuario, Long idCuenta) {
+	private String idUsuario;
+	private String idCuenta;
+
+
+
+	public UsuarioCuentaResponseDto(String idUsuario, String idCuenta) {
 		this.idUsuario = idUsuario;
 		this.idCuenta = idCuenta;
 	}

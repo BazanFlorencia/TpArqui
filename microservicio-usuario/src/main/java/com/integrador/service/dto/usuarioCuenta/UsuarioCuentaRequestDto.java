@@ -6,25 +6,16 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties( ignoreUnknown = true )
-
 public class UsuarioCuentaRequestDto {
 	
-	private Long idUsuario;
-	private Long idCuenta;
+	private String idUsuario;
+	private String idCuenta;
 	
-	public UsuarioCuentaRequestDto(Long idUsuario, Long idCuenta) {
+	public UsuarioCuentaRequestDto(String idUsuario, String idCuenta) {
 		this.idUsuario = idUsuario;
 		this.idCuenta = idCuenta;
 	}
 
-
-	public Long getIdUsuario() {
-		return idUsuario;
-	}
-
-	public Long getIdCuenta() {
-		return idCuenta;
-	}
 	
 	
 }

@@ -5,31 +5,29 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.integrador.domain.Usuario;
-import com.integrador.domain.Cuenta;
 
+import com.integrador.domain.mongodb.CuentaMongo;
+import com.integrador.domain.mongodb.UsuarioMongo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
 @NoArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class UsuarioResponseDto implements Serializable{
 
-	private  Long id;
+	private  String id;
     private  String nombre;
     private String apellido;
 	private  String celular;
 	private  String email;
 	@JsonIgnore
-	private  List<Cuenta> cuentas;
+	private  List<CuentaMongo> cuentas;
 	
 	
 	
     
-	public UsuarioResponseDto(Usuario u ) {
+	public UsuarioResponseDto(UsuarioMongo u ) {
         this.id = u.getId();
         this.nombre = u.getNombre();
         this.apellido = u.getApellido();
@@ -40,9 +38,7 @@ public class UsuarioResponseDto implements Serializable{
         this.cuentas = u.getCuentas();
 	}
 
-	public UsuarioResponseDto() {
-			
-	}
+
 
 	@Override
 	public String toString() {

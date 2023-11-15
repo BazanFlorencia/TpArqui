@@ -19,7 +19,7 @@ import com.integrador.service.dto.tarifa.TarifaRequestDto;
 import com.integrador.service.dto.tarifa.TarifaResponseDto;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -32,8 +32,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.Date;
 import java.util.List;
 
@@ -42,11 +41,12 @@ public class AdministradorService {
 
 	@Autowired
     private AdministradorRepository administradorRepository;
-	@Autowired
+	
+    @Autowired
 	private TarifaRepository tarifaRepository;
+	
 	@Autowired
     private  RestTemplate restTemplate;
-	
 	
 	
     public AdministradorService(AdministradorRepository administradorRepository, TarifaRepository tarifaRepository) {
@@ -260,7 +260,7 @@ public class AdministradorService {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
         ResponseEntity<Cuenta> response = restTemplate.exchange(
-                "http://localhost:8080/api/cuentas/" + cuentaId,
+                "http://localhost:8005/api/cuentas/" + cuentaId,
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<Cuenta>() {
@@ -277,7 +277,7 @@ public class AdministradorService {
             c.setDisponible(false);
             HttpEntity<Cuenta> requestEntity2 = new HttpEntity<>(c, headers);
             ResponseEntity<Cuenta> response2 = restTemplate.exchange(
-                    "http://localhost:8080/api/cuentas/" + cuentaId,
+                    "http://localhost:8005/api/cuentas/" + cuentaId,
                     HttpMethod.PUT,
                     requestEntity2,
 

@@ -47,6 +47,41 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.restheart</groupId>
+            <artifactId>restheart-mongoclient-provider</artifactId>
+            <version>7.4.2</version>
+        </dependency>
+		<dependency>
+			<groupId>org.restheart</groupId>
+			<artifactId>restheart-mongoclient-provider</artifactId>
+			<version>7.4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.restheart</groupId>
+			<artifactId>restheart-mongoclient-provider</artifactId>
+			<version>7.4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.sirayan.genericdb-mongo</groupId>
+			<artifactId>generic-db</artifactId>
+			<version>0.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.sirayan.genericdb-mongo</groupId>
+			<artifactId>generic-db</artifactId>
+			<version>0.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.sirayan.genericdb-mongo</groupId>
+			<artifactId>generic-db</artifactId>
+			<version>0.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.kukababy</groupId>
+			<artifactId>mongo-plus</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -3,6 +3,7 @@ package com.integrador.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.integrador.domain.Tarifa;
+import com.integrador.security.AuthorityConstants;
 import com.integrador.service.TarifaService;
 import com.integrador.service.dto.tarifa.TarifaRequestDto;
 import com.integrador.service.dto.tarifa.TarifaResponseDto;
@@ -35,6 +37,7 @@ public class TarifaController {
 
 	
 	 @GetMapping("/{id}")
+	 @PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.ADMIN + "\" )" )
 	   public ResponseEntity<?> getById(@PathVariable Long id){
 	        try{
 	            return ResponseEntity.status(HttpStatus.OK).body(tarifaService.findById(id));
@@ -46,6 +49,7 @@ public class TarifaController {
 
     
     @PostMapping("")
+    @PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.ADMIN + "\" )" )
     public ResponseEntity<?> save( @RequestBody @Validated TarifaRequestDto request ){
         try {
         	return ResponseEntity.status(HttpStatus.OK).body(tarifaService.save(request));
@@ -55,6 +59,7 @@ public class TarifaController {
     }
     
     @DeleteMapping("/{id}")
+    @PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.ADMIN + "\" )" )
     public ResponseEntity<?> delete(@PathVariable Long id){
         try{
             this.tarifaService.delete(id);
@@ -66,6 +71,7 @@ public class TarifaController {
     
     
     @PutMapping("/{id}")
+    @PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.ADMIN + "\" )" )
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Validated TarifaRequestDto request) {
         try {
             Tarifa tarifa = tarifaService.update(id, request);

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.integrador.domain.Mantenimiento;
+import com.integrador.security.AuthorityConstants;
 import com.integrador.service.MantenimientoService;
 import com.integrador.service.dto.mantenimiento.MantenimientoRequestDto;
 import com.integrador.service.dto.mantenimiento.MantenimientoResponseDto;
@@ -81,6 +83,7 @@ public class MantenimientoController {
     
   //agregar un mantenimiento, a la tabla y setea el monopatin al q se le hace el mantenimientno
   	@PostMapping("/agregarMonopatinAMantenimiento/{idMonopatin}")
+  	@PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.MANT + "\" )" )
       public ResponseEntity<?> agregarMantenimiento (@PathVariable Long idMonopatin) {
   	    try {
   	    	return ResponseEntity.status(HttpStatus.OK).body(mantenimientoService.agregarMonopatinAMantenimiento(idMonopatin));
@@ -91,6 +94,7 @@ public class MantenimientoController {
   	
   //setea un mantenimiento como terminado y setea el monopatin como disponible
   	@PostMapping("/finalizarMantenimiento/{idMantenimiento}")
+  	@PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.MANT + "\" )" )
       public ResponseEntity<?> finalizarMantenimiento (@PathVariable Long idMantenimiento) {
   	    try {	    
   	    	return ResponseEntity.status(HttpStatus.OK).body(mantenimientoService.finalizarMantenimiento(idMantenimiento));

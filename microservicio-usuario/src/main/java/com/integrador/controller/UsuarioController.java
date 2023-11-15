@@ -1,8 +1,10 @@
 package com.integrador.controller;
 
 import java.util.List;
-import java.util.Optional;
 
+import com.integrador.domain.mongodb.UsuarioMongo;
+import com.integrador.service.dto.usuario.UsuarioDTO;
+import com.integrador.service.mongodb.UsuarioServiceMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.integrador.domain.Usuario;
-import com.integrador.domain.clases.Monopatin;
-import com.integrador.service.UsuarioService;
 import com.integrador.service.dto.monopatin.MonopatinesCercaResponseDto;
-import com.integrador.service.dto.usuario.UsuarioRequestDto;
 import com.integrador.service.dto.usuario.UsuarioResponseDto;
 import com.integrador.service.dto.usuarioCuenta.UsuarioCuentaRequestDto;
 
@@ -31,23 +29,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UsuarioController {
 	@Autowired
-	private  UsuarioService usuarioService;
+	private UsuarioServiceMongo usuarioService;
 	
 	@GetMapping("")
     public ResponseEntity<?> findAll(){
 		try {
-			System.out.print("hola controler 1");
 			return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAll());
 			
 		}catch (Exception e){
-			System.out.print("hola controler 2");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error");
         }
     }
 
 	
 	 @GetMapping("/{id}")
-	   public ResponseEntity<?> getById(@PathVariable Long id){
+	   public ResponseEntity<?> getById(@PathVariable String id){
 	        try{
 	            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findById(id));
 	        }catch (Exception e){
@@ -58,7 +54,7 @@ public class UsuarioController {
 
     //ver si funciona
     @PostMapping("")
-    public ResponseEntity<?> save( @RequestBody @Validated UsuarioRequestDto request ){
+    public ResponseEntity<?> save( @RequestBody @Validated UsuarioDTO request ){
         try {
         	return ResponseEntity.status(HttpStatus.OK).body(usuarioService.save(request));
         }catch(Exception e) {
@@ -87,7 +83,7 @@ public class UsuarioController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable String id){
         try{
             this.usuarioService.delete(id);
             return ResponseEntity.status(HttpStatus.OK).body("Se elimino correctamente usuario con el id: " + id);
@@ -98,9 +94,9 @@ public class UsuarioController {
     
     //chequear
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Validated UsuarioRequestDto request) {
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody @Validated UsuarioDTO request) {
         try {
-            Usuario usuario = usuarioService.update(id, request);
+            UsuarioMongo usuario = usuarioService.update(id, request);
             UsuarioResponseDto response = new UsuarioResponseDto(usuario);
 
             return ResponseEntity.status(HttpStatus.OK).body(response);

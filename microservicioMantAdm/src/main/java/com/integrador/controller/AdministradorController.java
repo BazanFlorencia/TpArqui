@@ -7,11 +7,13 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.integrador.domain.Monopatin;
 import com.integrador.domain.Tarifa;
+import com.integrador.security.AuthorityConstants;
 import com.integrador.service.*;
 import com.integrador.service.dto.administrador.AdministradorRequestDto;
 import com.integrador.service.dto.administrador.AdministradorResponseDto;
@@ -83,6 +85,7 @@ public class AdministradorController {
     
     //agregar monopatin
     @PostMapping("/agregarMonopatin")
+    @PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.ADMIN + "\" )" )
     public ResponseEntity<?> agregarMonopatin (@RequestBody @Validated Monopatin request) {
 	    try {
 	    	return ResponseEntity.status(HttpStatus.OK).body(administradorService.agregarMonopatin(request));
@@ -92,6 +95,7 @@ public class AdministradorController {
 	}  
     
     @DeleteMapping("/eliminarMonopatin/{idMonopatin}")
+    @PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.ADMIN + "\" )" )
     public ResponseEntity<?> quitarMonopatin(@PathVariable Long idMonopatin){
         try{
             this.administradorService.quitarMonopatin(idMonopatin);
@@ -161,6 +165,7 @@ public class AdministradorController {
     
     //crear un parada
     @PostMapping("/paradas/agregarParada")
+    @PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.ADMIN + "\" )" )
     public ResponseEntity<?> agregarParada (@RequestBody @Validated ParadaRequestDto request) {
 	    try {
 	    	return ResponseEntity.status(HttpStatus.OK).body(administradorService.agregarParada(request));
@@ -172,6 +177,7 @@ public class AdministradorController {
     
     //quitar una parada
     @DeleteMapping("/paradas/quitarParada/{idParada}")
+    @PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.ADMIN + "\" )" )
     public ResponseEntity<?> eliminarParada (@PathVariable Long idParada){
         try{
             this.administradorService.eliminarParada(idParada);
@@ -184,6 +190,7 @@ public class AdministradorController {
     
     //anular cuenta
     @PutMapping("/cuentas/anularCuenta/{idCuenta}")
+    @PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.ADMIN + "\" )" )
     public ResponseEntity<?> anularCuenta(@PathVariable Long idCuenta) {
         try {
         	System.out.println("hola controller");
@@ -196,6 +203,7 @@ public class AdministradorController {
     
     //modificar tarifa
     @PutMapping("/modificarTarifaEnFecha")
+    @PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.ADMIN + "\" )" )
     public ResponseEntity<?> ModificarTarifaEnFecha (@RequestBody @Validated TarifaRequestDto request) {
         try {
             Tarifa tarifa = administradorService.updateTarifa(request);
@@ -211,6 +219,7 @@ public class AdministradorController {
     
   //definir una tarifa, paso el id y precio que quiero definir
   	@PutMapping("/definirTarifaComun/{id}/{precio}")
+  	@PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.ADMIN + "\" )" )
       public ResponseEntity<?> definirTarifaComun (@PathVariable Long id, @PathVariable double precio) {
   	    try {
   	    	return ResponseEntity.status(HttpStatus.OK).body(administradorService.definirTarifaComun(id, precio));
@@ -221,6 +230,7 @@ public class AdministradorController {
   	
   	//definir una tarifa, paso el id y precio que quiero definir para la tarifa especial
   		@PutMapping("/definirTarifaEspecial/{id}/{precio}")
+  		@PreAuthorize( "hasAnyAuthority(\"" + AuthorityConstants.ADMIN + "\" )" )
   	    public ResponseEntity<?> definirTarifaEspecial (@PathVariable Long id, @PathVariable double precio) {
   		    try {
   		    	return ResponseEntity.status(HttpStatus.OK).body(administradorService.definirTarifaEspecial(id, precio));

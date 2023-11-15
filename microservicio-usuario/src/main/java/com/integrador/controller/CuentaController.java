@@ -2,6 +2,9 @@ package com.integrador.controller;
 
 import java.util.List;
 
+import com.integrador.domain.mongodb.CuentaMongo;
+import com.integrador.service.dto.cuenta.CuentaDTO;
+import com.integrador.service.mongodb.CuentaServiceMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.integrador.domain.Cuenta;
-import com.integrador.service.CuentaService;
-import com.integrador.service.dto.cuenta.CuentaRequestDto;
 import com.integrador.service.dto.cuenta.CuentaResponseDto;
 
 import lombok.RequiredArgsConstructor;
@@ -28,26 +28,28 @@ import lombok.RequiredArgsConstructor;
 public class CuentaController {
 
 	@Autowired
-	private  CuentaService cuentaService;
+	private CuentaServiceMongo cuentaService;
+	
 	@GetMapping("")
-    public List<CuentaResponseDto> findAll(){
+    public List<CuentaDTO> findAll(){
+
         return this.cuentaService.findAll();
     }
 
 	
 	 @GetMapping("/{id}")
-	   public ResponseEntity<?> getById(@PathVariable Long id){
+           public ResponseEntity<?>getById(@PathVariable String id){
 	        try{
 	            return ResponseEntity.status(HttpStatus.OK).body(cuentaService.findById(id));
 	        }catch (Exception e){
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error. Cuenta inexistente");
 	        }
-	        
+
 	   }
 
     //ver si funciona
     @PostMapping("")
-    public ResponseEntity<?> save( @RequestBody @Validated CuentaRequestDto request ){
+    public ResponseEntity<?> save( @RequestBody @Validated CuentaDTO request ){
         try {
         	return ResponseEntity.status(HttpStatus.OK).body(cuentaService.save(request));
         }catch(Exception e) {
@@ -56,7 +58,7 @@ public class CuentaController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable String id){
         try{
             this.cuentaService.delete(id);
             return ResponseEntity.status(HttpStatus.OK).body("Se elimino correctamente la cuenta con el id: " + id);
@@ -67,9 +69,9 @@ public class CuentaController {
     
     //chequear
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Validated CuentaRequestDto request) {
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody @Validated CuentaDTO request) {
         try {
-            Cuenta cuenta = cuentaService.update(id, request);
+            CuentaMongo cuenta = cuentaService.update(id, request);
             CuentaResponseDto response = new CuentaResponseDto(cuenta);
 
             return ResponseEntity.status(HttpStatus.OK).body(response);
